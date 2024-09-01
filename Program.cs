@@ -78,9 +78,10 @@ namespace Hermes{
             try{
                 foreach (FileInfo file in currentDirectory.GetFiles()){
                     if (!wildCard && file.Extension != fileExtension) continue;
-                    int distance = LevenshteinDistance(file.Name, fileName + fileExtension);
+                    string name = file.Name.Replace(file.Extension, "");
+                    int distance = LevenshteinDistance(name, fileName);
                     float maxDistance =
-                        _searchQuality * Math.Max(file.Name.Length, fileName.Length + fileExtension.Length);
+                        _searchQuality * Math.Max(name.Length, fileName.Length);
                     if (distance > maxDistance) continue;
 
                     Find find = new(){
